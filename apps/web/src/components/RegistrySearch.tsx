@@ -46,28 +46,40 @@ export function RegistrySearch({ initialApps }: { initialApps: App[] }) {
   }, [query, search]);
 
   return (
-    <>
-      {/* Search Bar */}
-      <div className="relative max-w-md w-full">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          {isSearching ? (
-            <svg className="w-4 h-4 text-accent animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-            </svg>
-          ) : (
-            <svg className="w-4 h-4 text-muted" fill="none" viewBox="0 0 20 20">
-              <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-            </svg>
-          )}
+    <div className="w-full">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            Intent Registry
+          </h1>
+          <p className="mt-2 text-muted text-lg">
+            Discover agent-enabled applications and their capabilities.
+          </p>
         </div>
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="block w-full p-3 pl-10 text-sm text-foreground bg-card rounded-xl border border-border focus:ring-accent focus:border-accent focus:outline-none"
-          placeholder="Search intents or apps..."
-        />
+
+        {/* Search Bar */}
+        <div className="relative max-w-md w-full">
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            {isSearching ? (
+              <svg className="w-4 h-4 text-accent animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4 text-muted" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+              </svg>
+            )}
+          </div>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="block w-full p-3 pl-10 text-sm text-foreground bg-card rounded-xl border border-border focus:ring-accent focus:border-accent focus:outline-none"
+            placeholder="Search intents or apps..."
+          />
+        </div>
       </div>
 
       {/* Results Grid */}
@@ -142,6 +154,6 @@ export function RegistrySearch({ initialApps }: { initialApps: App[] }) {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }
