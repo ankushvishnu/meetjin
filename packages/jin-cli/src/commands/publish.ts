@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { validate } from './validate'
 
-const REGISTRY_URL = process.env.JIN_REGISTRY_URL || 'https://meetjin.com/api/v1'
+const REGISTRY_URL = process.env.JIN_REGISTRY_URL || 'https://www.meetjin.com/api/v1'
 
 export async function publish(cwd: string = process.cwd()) {
   const jinJsonPath = path.join(cwd, 'jin.json')
@@ -67,7 +67,7 @@ export async function publish(cwd: string = process.cwd()) {
 
   if (!response.ok) {
     const error = await response.json()
-    console.log(`✗ Publish failed: ${error.message}`)
+    console.log(`✗ Publish failed: ${error.error || error.message || 'Unknown error'}`)
     process.exit(1)
   }
 

@@ -7,7 +7,7 @@ exports.publish = publish;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const validate_1 = require("./validate");
-const REGISTRY_URL = process.env.JIN_REGISTRY_URL || 'https://meetjin.com/api/v1';
+const REGISTRY_URL = process.env.JIN_REGISTRY_URL || 'https://www.meetjin.com/api/v1';
 async function publish(cwd = process.cwd()) {
     const jinJsonPath = path_1.default.join(cwd, 'jin.json');
     // Validate first
@@ -65,7 +65,7 @@ async function publish(cwd = process.cwd()) {
     });
     if (!response.ok) {
         const error = await response.json();
-        console.log(`✗ Publish failed: ${error.message}`);
+        console.log(`✗ Publish failed: ${error.error || error.message || 'Unknown error'}`);
         process.exit(1);
     }
     const data = await response.json();
