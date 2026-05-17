@@ -1,0 +1,14 @@
+{
+  "name": "@meetjin/sdk",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "dependencies": {
+    "@meetjin/core": "workspace:*",
+    "zustand": "^5.0.13"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "react": "^19.2.6"
+  }
+}
