@@ -5,6 +5,7 @@ import { scanNextJS } from '../scanners/nextjs'
 import { scanReactRouter } from '../scanners/react-router'
 import { scanExpress } from '../scanners/express'
 import { scanOpenAPI } from '../scanners/openapi'
+import { scanViteReact } from '../scanners/vite-react'
 
 export async function init(cwd: string = process.cwd()) {
   console.log('🔍 Jin — scanning your codebase...\n')
@@ -44,6 +45,13 @@ export async function init(cwd: string = process.cwd()) {
     const intents = await scanExpress(cwd)
     detectedIntents.push(...intents)
     console.log(`   Found ${intents.length} endpoints`)
+  }
+
+  if (deps['vite'] && deps['react']) {
+    console.log('   Detected: Vite + React SPA')
+    const intents = await scanViteReact(cwd)
+    detectedIntents.push(...intents)
+    console.log(`   Found ${intents.length} routes`)
   }
 
   // Check for existing OpenAPI spec

@@ -10,6 +10,7 @@ const nextjs_1 = require("../scanners/nextjs");
 const react_router_1 = require("../scanners/react-router");
 const express_1 = require("../scanners/express");
 const openapi_1 = require("../scanners/openapi");
+const vite_react_1 = require("../scanners/vite-react");
 async function init(cwd = process.cwd()) {
     console.log('🔍 Jin — scanning your codebase...\n');
     const detectedIntents = [];
@@ -42,6 +43,12 @@ async function init(cwd = process.cwd()) {
         const intents = await (0, express_1.scanExpress)(cwd);
         detectedIntents.push(...intents);
         console.log(`   Found ${intents.length} endpoints`);
+    }
+    if (deps['vite'] && deps['react']) {
+        console.log('   Detected: Vite + React SPA');
+        const intents = await (0, vite_react_1.scanViteReact)(cwd);
+        detectedIntents.push(...intents);
+        console.log(`   Found ${intents.length} routes`);
     }
     // Check for existing OpenAPI spec
     const openApiPaths = ['openapi.json', 'openapi.yaml', 'swagger.json', 'swagger.yaml'];
