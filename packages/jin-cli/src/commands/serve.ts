@@ -1,11 +1,12 @@
 import fs from 'fs'
 import http from 'http'
 import path from 'path'
+import { resolveJinJsonPath } from '../utils'
 
 export function serve(options: { port: string }, cwd: string = process.cwd()) {
-  const jinJsonPath = path.join(cwd, 'jin.json')
+  const jinJsonPath = resolveJinJsonPath(cwd)
   
-  if (!fs.existsSync(jinJsonPath)) {
+  if (!jinJsonPath) {
     console.log('✗ jin.json not found — run: npx jin init')
     process.exit(1)
   }

@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validate = validate;
 exports.validateAndPrint = validateAndPrint;
 const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
+const utils_1 = require("../utils");
 const VALID_CATEGORIES = [
     'commerce', 'travel', 'productivity', 'communication',
     'finance', 'identity', 'healthcare', 'legal',
@@ -88,8 +88,8 @@ function validate(jinJsonPath) {
     return result;
 }
 function validateAndPrint(cwd = process.cwd()) {
-    const jinJsonPath = path_1.default.join(cwd, 'jin.json');
-    if (!fs_1.default.existsSync(jinJsonPath)) {
+    const jinJsonPath = (0, utils_1.resolveJinJsonPath)(cwd);
+    if (!jinJsonPath) {
         console.log('✗ jin.json not found — run: npx jin init');
         process.exit(1);
     }

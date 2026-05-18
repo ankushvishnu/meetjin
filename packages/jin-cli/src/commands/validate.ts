@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { JinJSON, AIPCategory } from '../types/aip'
+import { resolveJinJsonPath } from '../utils'
 
 const VALID_CATEGORIES: AIPCategory[] = [
   'commerce', 'travel', 'productivity', 'communication',
@@ -90,9 +91,9 @@ export function validate(jinJsonPath: string): ValidationResult {
 }
 
 export function validateAndPrint(cwd: string = process.cwd()) {
-  const jinJsonPath = path.join(cwd, 'jin.json')
+  const jinJsonPath = resolveJinJsonPath(cwd)
 
-  if (!fs.existsSync(jinJsonPath)) {
+  if (!jinJsonPath) {
     console.log('✗ jin.json not found — run: npx jin init')
     process.exit(1)
   }

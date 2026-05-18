@@ -7,13 +7,14 @@ exports.watch = watch;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const validate_1 = require("./validate");
+const utils_1 = require("../utils");
 /**
  * Watch jin.json and related source files for changes.
  * Re-validates on every change and optionally re-serves.
  */
 function watch(cwd = process.cwd()) {
-    const jinJsonPath = path_1.default.join(cwd, 'jin.json');
-    if (!fs_1.default.existsSync(jinJsonPath)) {
+    const jinJsonPath = (0, utils_1.resolveJinJsonPath)(cwd);
+    if (!jinJsonPath) {
         console.log('✗ jin.json not found — run: npx @meetjin/cli init');
         process.exit(1);
     }

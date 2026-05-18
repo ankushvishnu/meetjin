@@ -5,11 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.publish = publish;
 const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
 const validate_1 = require("./validate");
+const utils_1 = require("../utils");
 const REGISTRY_URL = process.env.JIN_REGISTRY_URL || 'https://www.meetjin.com/api/v1';
 async function publish(cwd = process.cwd()) {
-    const jinJsonPath = path_1.default.join(cwd, 'jin.json');
+    const jinJsonPath = (0, utils_1.resolveJinJsonPath)(cwd);
+    if (!jinJsonPath) {
+        console.log('✗ jin.json not found — run: npx jin init');
+        process.exit(1);
+    }
     // Validate first
     console.log('Validating jin.json...');
     const validation = (0, validate_1.validate)(jinJsonPath);
@@ -20,14 +24,8 @@ async function publish(cwd = process.cwd()) {
     console.log('✓ Valid\n');
     // Load jin.json
     const jinJson = JSON.parse(fs_1.default.readFileSync(jinJsonPath, 'utf-8'));
-    // Check for API key
-    const apiKey = process.env.JIN_API_KEY;
-    if (!apiKey) {
-        console.log('✗ JIN_API_KEY not set');
-        console.log('  Get your API key at: https://meetjin.com/dashboard');
-        console.log('  Then set it: export JIN_API_KEY=your_key_here');
-        process.exit(1);
-    }
+    // Optional API key for authenticated publishing
+    const apiKey = process.env.JIN_API_KEY || '';
     // Verify domain ownership
     console.log(`Verifying domain: ${jinJson.app.url}`);
     const intentMapUrl = `${jinJson.app.url}/.well-known/jin.json`;
@@ -38,7 +36,17 @@ async function publish(cwd = process.cwd()) {
             console.log('  Run: npx jin serve — then deploy jin.json to your server');
             process.exit(1);
         }
-        console.log('✓ Intent map reachable\n');
+        const text = await res.text();
+        try {
+            JSON.parse(text);
+        }
+        catch {
+            console.log(`✗ ${intentMapUrl} is not returning valid JSON!`);
+            console.log('  Your server is likely returning an HTML fallback/404 page instead of the jin.json file.');
+            console.log('  Please ensure jin.json is placed in your public/.well-known/ folder and deployed.');
+            process.exit(1);
+        }
+        console.log('✓ Intent map reachable and valid\n');
     }
     catch {
         console.log(`✗ Cannot reach ${intentMapUrl}`);

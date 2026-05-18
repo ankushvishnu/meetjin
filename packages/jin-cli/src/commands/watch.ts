@@ -1,15 +1,16 @@
 import fs from 'fs'
 import path from 'path'
 import { validate } from './validate'
+import { resolveJinJsonPath } from '../utils'
 
 /**
  * Watch jin.json and related source files for changes.
  * Re-validates on every change and optionally re-serves.
  */
 export function watch(cwd: string = process.cwd()) {
-  const jinJsonPath = path.join(cwd, 'jin.json')
+  const jinJsonPath = resolveJinJsonPath(cwd)
 
-  if (!fs.existsSync(jinJsonPath)) {
+  if (!jinJsonPath) {
     console.log('✗ jin.json not found — run: npx @meetjin/cli init')
     process.exit(1)
   }

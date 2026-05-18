@@ -94,13 +94,25 @@ async function init(cwd = process.cwd()) {
             verified: false
         }
     };
-    // Write jin.json
-    const outputPath = path_1.default.join(cwd, 'jin.json');
+    // Determine output path
+    let outDir = cwd;
+    if (fs_1.default.existsSync(path_1.default.join(cwd, 'public'))) {
+        outDir = path_1.default.join(cwd, 'public', '.well-known');
+        console.log('   Found public/ directory — placing intent map there.');
+    }
+    else {
+        outDir = path_1.default.join(cwd, '.well-known');
+        console.log('   No public/ directory found — placing intent map in root .well-known/');
+    }
+    if (!fs_1.default.existsSync(outDir)) {
+        fs_1.default.mkdirSync(outDir, { recursive: true });
+    }
+    const outputPath = path_1.default.join(outDir, 'jin.json');
     fs_1.default.writeFileSync(outputPath, JSON.stringify(scaffold, null, 2));
     console.log(`✓ Generated jin.json with ${scaffold.intents.length} intent(s)`);
     console.log('');
     console.log('Next steps:');
-    console.log('  1. Open jin.json and fill in the TODO fields');
+    console.log(`  1. Open ${path_1.default.relative(cwd, outputPath)} and fill in the TODO fields`);
     console.log('  2. Add natural language triggers to each intent');
     console.log('  3. Run: npx jin validate');
     console.log('  4. Run: npx jin serve  (to test locally)');

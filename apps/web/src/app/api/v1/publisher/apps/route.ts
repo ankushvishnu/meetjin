@@ -8,9 +8,38 @@ import { authenticatePublisher, slugify } from '@/lib/auth'
  * Publish a new app to the registry.
  */
 export async function POST(request: NextRequest) {
-  const publisher = await authenticatePublisher(request)
+  let publisher = await authenticatePublisher(request)
+  
+  // Fallback to anonymous publisher if no valid API key is provided
   if (!publisher) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    // Check if anonymous publisher exists
+    let { data: anonPub } = await supabaseAdmin
+      .from('publishers')
+      .select('id')
+      .eq('email', 'anonymous@meetjin.com')
+      .single()
+
+    if (!anonPub) {
+      // Create anonymous publisher
+      const { data: newPub } = await supabaseAdmin
+        .from('publishers')
+        .insert({
+          name: 'Anonymous Publisher',
+          email: 'anonymous@meetjin.com',
+          plan: 'free',
+          is_verified: false
+        })
+        .select('id')
+        .single()
+      
+      anonPub = newPub
+    }
+
+    if (!anonPub) {
+      return NextResponse.json({ error: 'Failed to assign anonymous publisher' }, { status: 500 })
+    }
+
+    publisher = anonPub
   }
 
   try {
