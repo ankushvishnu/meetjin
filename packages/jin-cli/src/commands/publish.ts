@@ -1,22 +1,11 @@
 import fs from 'fs'
 import path from 'path'
 import { validate } from './validate'
-import { resolveJinJsonPath } from '../utils'
+import { resolveJinJsonPath, promptUser } from '../utils'
 import { execSync } from 'child_process'
-import readline from 'readline'
 
 const REGISTRY_URL = process.env.JIN_REGISTRY_URL || 'https://www.meetjin.com/api/v1'
 
-function promptUser(query: string): Promise<string> {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  })
-  return new Promise(resolve => rl.question(query, ans => {
-    rl.close()
-    resolve(ans.trim().toLowerCase())
-  }))
-}
 
 async function waitForDeployment(url: string) {
   console.log('\nWaiting for deployment...')

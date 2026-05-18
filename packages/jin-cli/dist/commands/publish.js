@@ -9,18 +9,7 @@ const path_1 = __importDefault(require("path"));
 const validate_1 = require("./validate");
 const utils_1 = require("../utils");
 const child_process_1 = require("child_process");
-const readline_1 = __importDefault(require("readline"));
 const REGISTRY_URL = process.env.JIN_REGISTRY_URL || 'https://www.meetjin.com/api/v1';
-function promptUser(query) {
-    const rl = readline_1.default.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-    return new Promise(resolve => rl.question(query, ans => {
-        rl.close();
-        resolve(ans.trim().toLowerCase());
-    }));
-}
 async function waitForDeployment(url) {
     console.log('\nWaiting for deployment...');
     for (let i = 0; i < 24; i++) {
@@ -72,7 +61,7 @@ async function publish(options = {}, cwd = process.cwd()) {
             console.log('  Deploy manually then re-run: npx @meetjin/cli publish --skip-deploy');
             process.exit(1);
         }
-        const ans = await promptUser('Deploy to GitHub and publish? (y/n): ');
+        const ans = await (0, utils_1.promptUser)('Deploy to GitHub and publish? (y/n): ');
         if (ans === 'y' || ans === 'yes') {
             console.log('\nDeploying your intent map...\n');
             console.log('  Staging changes:');
@@ -165,7 +154,7 @@ async function publish(options = {}, cwd = process.cwd()) {
         });
         if (!response.ok) {
             if (response.status === 409 && !override) {
-                const ans = await promptUser(`\n⚠ App slug already exists in registry. Override? (y/n): `);
+                const ans = await (0, utils_1.promptUser)(`\n⚠ App slug already exists in registry. Override? (y/n): `);
                 if (ans === 'y' || ans === 'yes') {
                     override = true;
                     return await pushToRegistry();

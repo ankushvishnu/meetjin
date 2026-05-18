@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolveJinJsonPath = resolveJinJsonPath;
+exports.promptUser = promptUser;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 /**
@@ -25,4 +26,15 @@ function resolveJinJsonPath(cwd = process.cwd()) {
         }
     }
     return null;
+}
+const readline_1 = __importDefault(require("readline"));
+function promptUser(query) {
+    const rl = readline_1.default.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+    return new Promise(resolve => rl.question(query, ans => {
+        rl.close();
+        resolve(ans.trim().toLowerCase());
+    }));
 }

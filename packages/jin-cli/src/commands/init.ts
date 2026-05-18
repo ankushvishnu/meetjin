@@ -6,14 +6,19 @@ import { scanReactRouter } from '../scanners/react-router'
 import { scanExpress } from '../scanners/express'
 import { scanOpenAPI } from '../scanners/openapi'
 import { scanViteReact } from '../scanners/vite-react'
-import { resolveJinJsonPath } from '../utils'
+import { scanSupabaseFunctions } from '../scanners/supabase-functions'
+import { resolveJinJsonPath, promptUser } from '../utils'
 
 export async function init(cwd: string = process.cwd()) {
   const existingPath = resolveJinJsonPath(cwd)
   if (existingPath) {
-    console.log(`✗ Found existing intent map at ${path.relative(cwd, existingPath) || 'jin.json'}`)
-    console.log('  Aborting init to prevent overwriting your data.')
-    process.exit(1)
+    console.log(`⚠ Found existing intent map at ${path.relative(cwd, existingPath) || 'jin.json'}`)
+    const ans = await promptUser('Do you want to override and rewrite it? (y/n): ')
+    if (ans !== 'y' && ans !== 'yes') {
+      console.log('  Aborting init.')
+      process.exit(0)
+    }
+    console.log('  Overwriting existing intent map...\n')
   }
 
   console.log('🔍 Jin — scanning your codebase...\n')
@@ -60,6 +65,13 @@ export async function init(cwd: string = process.cwd()) {
     const intents = await scanViteReact(cwd)
     detectedIntents.push(...intents)
     console.log(`   Found ${intents.length} routes`)
+  }
+
+  if (fs.existsSync(path.join(cwd, 'supabase/functions'))) {
+    console.log('   Detected: Supabase Edge Functions')
+    const intents = await scanSupabaseFunctions(cwd)
+    detectedIntents.push(...intents)
+    console.log(`   Found ${intents.length} edge functions`)
   }
 
   // Check for existing OpenAPI spec
