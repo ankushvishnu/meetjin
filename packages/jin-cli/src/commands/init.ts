@@ -6,8 +6,16 @@ import { scanReactRouter } from '../scanners/react-router'
 import { scanExpress } from '../scanners/express'
 import { scanOpenAPI } from '../scanners/openapi'
 import { scanViteReact } from '../scanners/vite-react'
+import { resolveJinJsonPath } from '../utils'
 
 export async function init(cwd: string = process.cwd()) {
+  const existingPath = resolveJinJsonPath(cwd)
+  if (existingPath) {
+    console.log(`✗ Found existing intent map at ${path.relative(cwd, existingPath) || 'jin.json'}`)
+    console.log('  Aborting init to prevent overwriting your data.')
+    process.exit(1)
+  }
+
   console.log('🔍 Jin — scanning your codebase...\n')
 
   const detectedIntents: Partial<AIPIntent>[] = []

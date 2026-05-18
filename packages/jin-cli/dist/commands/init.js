@@ -11,7 +11,14 @@ const react_router_1 = require("../scanners/react-router");
 const express_1 = require("../scanners/express");
 const openapi_1 = require("../scanners/openapi");
 const vite_react_1 = require("../scanners/vite-react");
+const utils_1 = require("../utils");
 async function init(cwd = process.cwd()) {
+    const existingPath = (0, utils_1.resolveJinJsonPath)(cwd);
+    if (existingPath) {
+        console.log(`✗ Found existing intent map at ${path_1.default.relative(cwd, existingPath) || 'jin.json'}`);
+        console.log('  Aborting init to prevent overwriting your data.');
+        process.exit(1);
+    }
     console.log('🔍 Jin — scanning your codebase...\n');
     const detectedIntents = [];
     let packageJson = {};
