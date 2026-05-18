@@ -33,7 +33,8 @@ program
 program
   .command('publish')
   .description('Publish your jin.json to the meetjin.com registry')
-  .action(() => publish(process.cwd()))
+  .option('--skip-deploy', 'Skip automated deployment via git')
+  .action((options) => publish(options, process.cwd()))
 
 program
   .command('watch')

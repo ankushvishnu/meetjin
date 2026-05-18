@@ -91,16 +91,37 @@ export async function POST(request: NextRequest) {
     // Generate slug
     const slug = slugify(name)
 
+    // Check if app exists
+    const { data: existingApp } = await supabaseAdmin
+      .from('apps')
+      .select('id, publisher_id')
+      .eq('slug', slug)
+      .single()
+
     // Extract categories from intents
     const categories = [...new Set(intentMapData.intents.map((i: any) => i.category).filter(Boolean))]
 
-    // Create app
-    const { data: app, error: appError } = await supabaseAdmin
-      .from('apps')
-      .insert({
-        publisher_id: publisher.id,
-        name,
-        slug,
+    let app
+
+    if (existingApp) {
+      if (existingApp.publisher_id !== publisher.id) {
+        return NextResponse.json(
+          { error: `App with slug "${slug}" is owned by another publisher` },
+          { status: 403 }
+        )
+      }
+      if (!body.override) {
+        return NextResponse.json(
+          { error: `App with slug "${slug}" already exists. Use override to update.` },
+          { status: 409 }
+        )
+      }
+      
+      // Override: Delete old intents
+      await supabaseAdmin.from('intents').delete().eq('app_id', existingApp.id)
+      
+      // Update app
+      const { error: updateError } = await supabaseAdmin.from('apps').update({
         description: description || intentMapData.app?.description || null,
         url,
         logo_url: logo_url || null,
@@ -114,19 +135,44 @@ export async function POST(request: NextRequest) {
         total_intents: intentMapData.intents.length,
         last_checked_at: new Date().toISOString(),
         last_check_ok: true,
-      })
-      .select('id, slug')
-      .single()
+      }).eq('id', existingApp.id)
 
-    if (appError) {
-      if (appError.code === '23505') {
-        return NextResponse.json(
-          { error: `App with slug "${slug}" already exists` },
-          { status: 409 }
-        )
+      if (updateError) {
+        console.error('App update error:', updateError)
+        return NextResponse.json({ error: 'Failed to update app' }, { status: 500 })
       }
-      console.error('App create error:', appError)
-      return NextResponse.json({ error: 'Failed to create app' }, { status: 500 })
+      
+      app = { id: existingApp.id, slug }
+    } else {
+      // Create app
+      const { data: newApp, error: appError } = await supabaseAdmin
+        .from('apps')
+        .insert({
+          publisher_id: publisher.id,
+          name,
+          slug,
+          description: description || intentMapData.app?.description || null,
+          url,
+          logo_url: logo_url || null,
+          contact_email: contact_email || null,
+          aip_version: intentMapData.aip_version,
+          intent_map_url,
+          intent_map_hash: intentMapHash,
+          raw_intent_map: intentMapData,
+          categories,
+          is_community: is_community || false,
+          total_intents: intentMapData.intents.length,
+          last_checked_at: new Date().toISOString(),
+          last_check_ok: true,
+        })
+        .select('id, slug')
+        .single()
+
+      if (appError) {
+        console.error('App create error:', appError)
+        return NextResponse.json({ error: 'Failed to create app' }, { status: 500 })
+      }
+      app = newApp
     }
 
     // Insert intents

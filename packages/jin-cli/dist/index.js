@@ -28,7 +28,8 @@ program
 program
     .command('publish')
     .description('Publish your jin.json to the meetjin.com registry')
-    .action(() => (0, publish_1.publish)(process.cwd()));
+    .option('--skip-deploy', 'Skip automated deployment via git')
+    .action((options) => (0, publish_1.publish)(options, process.cwd()));
 program
     .command('watch')
     .description('Watch your codebase and update jin.json automatically')
