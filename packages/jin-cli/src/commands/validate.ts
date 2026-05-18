@@ -108,7 +108,8 @@ export function validateAndPrint(cwd: string = process.cwd()) {
   result.warnings.forEach(w => console.log(`⚠ ${w}`))
 
   if (result.valid) {
-    console.log(`\n  ${result.warnings.length === 0 ? 'All good. Run: npx jin publish' : 'Fix warnings for better agent matching.'}`)
+    console.log('\nReady to publish. Deploy your app first, then:')
+    console.log('  npx @meetjin/cli publish')
   } else {
     console.log(`\n  Fix ${result.errors.length} error(s) before publishing.`)
     process.exit(1)

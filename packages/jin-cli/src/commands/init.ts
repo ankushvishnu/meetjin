@@ -118,13 +118,19 @@ export async function init(cwd: string = process.cwd()) {
   const outputPath = path.join(outDir, 'jin.json')
   fs.writeFileSync(outputPath, JSON.stringify(scaffold, null, 2))
 
-  console.log(`✓ Generated jin.json with ${scaffold.intents.length} intent(s)`)
-  console.log('')
-  console.log('Next steps:')
-  console.log(`  1. Open ${path.relative(cwd, outputPath)} and fill in the TODO fields`)
-  console.log('  2. Add natural language triggers to each intent')
-  console.log('  3. Run: npx jin validate')
-  console.log('  4. Run: npx jin serve  (to test locally)')
-  console.log('  5. Run: npx jin publish (to list on meetjin.com)')
-  console.log('')
+  console.log(`✓ Generated jin.json with ${scaffold.intents.length} intents`)
+  if (outDir !== cwd) {
+    console.log(`✓ Copied to ${path.relative(cwd, outputPath)}`)
+  }
+
+  console.log('\nNext steps:')
+  console.log(`  1. Review ${path.relative(cwd, outputPath) || 'jin.json'} and fill in descriptions`)
+  console.log('  2. Run: npx @meetjin/cli validate')
+  console.log('  3. Commit and deploy your app')
+  console.log(`     git add ${path.relative(cwd, outputPath) || 'jin.json'}`)
+  console.log('     git commit -m "feat: add AIP intent map"')
+  console.log('     git push')
+  console.log('  4. Once deployed, run: npx @meetjin/cli publish')
+  console.log('     (your intent map must be live at')
+  console.log('      yourdomain.com/.well-known/jin.json)')
 }

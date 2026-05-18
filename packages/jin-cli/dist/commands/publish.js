@@ -15,25 +15,24 @@ async function publish(cwd = process.cwd()) {
         process.exit(1);
     }
     // Validate first
-    console.log('Validating jin.json...');
     const validation = (0, validate_1.validate)(jinJsonPath);
     if (!validation.valid) {
         console.log('✗ Validation failed. Fix errors before publishing.');
         process.exit(1);
     }
-    console.log('✓ Valid\n');
     // Load jin.json
     const jinJson = JSON.parse(fs_1.default.readFileSync(jinJsonPath, 'utf-8'));
     // Optional API key for authenticated publishing
     const apiKey = process.env.JIN_API_KEY || '';
     // Verify domain ownership
-    console.log(`Verifying domain: ${jinJson.app.url}`);
+    console.log('Before publishing, confirm your intent map is live.\n');
+    console.log(`Checking ${jinJson.app.url}/.well-known/jin.json...`);
     const intentMapUrl = `${jinJson.app.url}/.well-known/jin.json`;
     try {
         const res = await fetch(intentMapUrl);
         if (!res.ok) {
             console.log(`✗ Cannot reach ${intentMapUrl}`);
-            console.log('  Run: npx jin serve — then deploy jin.json to your server');
+            console.log('  Deploy jin.json to your server before publishing');
             process.exit(1);
         }
         const text = await res.text();
@@ -46,7 +45,7 @@ async function publish(cwd = process.cwd()) {
             console.log('  Please ensure jin.json is placed in your public/.well-known/ folder and deployed.');
             process.exit(1);
         }
-        console.log('✓ Intent map reachable and valid\n');
+        console.log('✓ Found and valid');
     }
     catch {
         console.log(`✗ Cannot reach ${intentMapUrl}`);
@@ -77,11 +76,5 @@ async function publish(cwd = process.cwd()) {
         process.exit(1);
     }
     const data = await response.json();
-    console.log(`✓ Published successfully\n`);
-    console.log(`  Registry URL: ${data.registry_url}`);
-    console.log(`  Intents imported: ${data.intents_imported}`);
-    console.log(`  Status: ${data.status}`);
-    console.log('');
-    console.log('  Agents can now discover your intents at:');
-    console.log(`  https://meetjin.com/api/v1/registry/apps/${data.slug}`);
+    console.log(`✓ Published to meetjin.com/registry`);
 }
