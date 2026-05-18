@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     "Browse the Jin Registry to discover applications with AIP-compliant intent maps. Find agent-enabled tools, services, and APIs.",
 };
 
+export const dynamic = 'force-dynamic';
+
+
 async function getApps() {
   try {
     const { data, error } = await supabaseAdmin
