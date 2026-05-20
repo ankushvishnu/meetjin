@@ -6,7 +6,11 @@ const ROUTE_PATTERNS = [
   // <Route path="/something"
   /<Route[^>]*path\s*=\s*['"](\/[^'"]+)['"]/gi,
   // { path: "/something" } (createBrowserRouter)
-  /path\s*:\s*['"](\/[^'"]+)['"]/gi
+  /path\s*:\s*['"](\/[^'"]+)['"]/gi,
+  // <Route path="something" (relative path)
+  /<Route[^>]*path\s*=\s*['"]([^/][^'"]+)['"]/gi,
+  // { path: "something" } (relative path)
+  /path\s*:\s*['"]([^/][^'"]+)['"]/gi,
 ]
 
 /**
@@ -70,7 +74,12 @@ function scanFile(filePath: string, intents: Partial<AIPIntent>[]) {
     let match: RegExpExecArray | null
 
     while ((match = pattern.exec(content)) !== null) {
-      const endpoint = match[1]
+      let endpoint = match[1]
+
+      // Normalize relative paths to absolute
+      if (!endpoint.startsWith('/')) {
+        endpoint = '/' + endpoint
+      }
 
       // Skip root or catch-all routes which are too generic
       if (endpoint === '/' || endpoint === '*' || endpoint.includes('*')) continue

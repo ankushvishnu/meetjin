@@ -12,15 +12,21 @@ export async function scanOpenAPI(filePath: string): Promise<Partial<AIPIntent>[
 
   if (!fs.existsSync(filePath)) return intents
 
-  // Only support JSON for now (YAML would need a parser dep)
-  if (filePath.endsWith('.yaml') || filePath.endsWith('.yml')) {
-    console.log('   ⚠ YAML OpenAPI specs require the yaml package — skipping. Convert to JSON or install yaml.')
-    return intents
-  }
-
   let spec: any
   try {
-    spec = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
+    const raw = fs.readFileSync(filePath, 'utf-8')
+    if (filePath.endsWith('.yaml') || filePath.endsWith('.yml')) {
+      try {
+        // @ts-ignore: optional YAML parser dependency
+        const yaml = await import('yaml')
+        spec = yaml.parse(raw)
+      } catch (importError) {
+        console.log('   ⚠ YAML OpenAPI specs require the yaml package. Install yaml or use JSON.')
+        return intents
+      }
+    } else {
+      spec = JSON.parse(raw)
+    }
   } catch (e) {
     console.log(`   ⚠ Failed to parse ${path.basename(filePath)}`)
     return intents

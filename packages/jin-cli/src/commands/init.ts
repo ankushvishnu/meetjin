@@ -7,6 +7,7 @@ import { scanExpress } from '../scanners/express'
 import { scanOpenAPI } from '../scanners/openapi'
 import { scanViteReact } from '../scanners/vite-react'
 import { scanSupabaseFunctions } from '../scanners/supabase-functions'
+import { scanDart } from '../scanners/dart'
 import { resolveJinJsonPath, promptUser } from '../utils'
 
 export async function init(cwd: string = process.cwd()) {
@@ -39,7 +40,15 @@ export async function init(cwd: string = process.cwd()) {
     ...packageJson.devDependencies
   }
 
-  if (deps['next']) {
+  const hasNextApp = Boolean(
+    deps['next'] ||
+    fs.existsSync(path.join(cwd, 'src/app')) ||
+    fs.existsSync(path.join(cwd, 'app')) ||
+    fs.existsSync(path.join(cwd, 'src/pages/api')) ||
+    fs.existsSync(path.join(cwd, 'pages/api'))
+  )
+
+  if (hasNextApp) {
     console.log('   Detected: Next.js')
     const intents = await scanNextJS(cwd)
     detectedIntents.push(...intents)
@@ -65,6 +74,13 @@ export async function init(cwd: string = process.cwd()) {
     const intents = await scanViteReact(cwd)
     detectedIntents.push(...intents)
     console.log(`   Found ${intents.length} routes`)
+  }
+
+  if (fs.existsSync(path.join(cwd, 'pubspec.yaml'))) {
+    console.log('   Detected: Dart/Flutter project')
+    const intents = await scanDart(cwd)
+    detectedIntents.push(...intents)
+    console.log(`   Found ${intents.length} routes/endpoints`)
   }
 
   if (fs.existsSync(path.join(cwd, 'supabase/functions'))) {
