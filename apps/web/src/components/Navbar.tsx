@@ -6,41 +6,45 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10 border border-accent/20 transition-all group-hover:bg-accent/20 group-hover:border-accent/30">
-              <span className="text-accent font-bold text-sm">J</span>
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white border border-white/20 transition-all group-hover:scale-110">
+              <span className="text-black font-black text-xs">J</span>
             </div>
-            <span className="font-semibold text-lg tracking-tight text-foreground">
+            <span className="font-bold text-xl tracking-tighter text-foreground uppercase">
               meetjin
             </span>
           </Link>
 
           {/* Navigation */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-2">
             <Link
               href="/registry"
-              className="px-4 py-2 text-sm text-muted hover:text-foreground transition-colors rounded-lg hover:bg-white/[0.04]"
+              className="px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-muted hover:text-foreground transition-all"
             >
               Registry
             </Link>
             <Link
+              href="/explore"
+              className="px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-muted hover:text-foreground transition-all"
+            >
+              Explore
+            </Link>
+            <Link
               href="/build"
-              className="px-4 py-2 text-sm text-muted hover:text-foreground transition-colors rounded-lg hover:bg-white/[0.04]"
+              className="px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-muted hover:text-foreground transition-all"
             >
               Build
             </Link>
-            <a
-              href="https://github.com/meetjin/jin"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 text-sm text-muted hover:text-foreground transition-colors rounded-lg hover:bg-white/[0.04]"
+            <Link
+              href="/spec"
+              className="px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-muted hover:text-foreground transition-all"
             >
               Spec
-            </a>
-            <div className="ml-2 h-5 w-px bg-border" />
+            </Link>
+            <div className="mx-2 h-4 w-px bg-border" />
             <Link
               href="/publish"
-              className="ml-2 inline-flex items-center gap-2 rounded-lg bg-accent/10 border border-accent/20 px-4 py-2 text-sm font-medium text-accent transition-all hover:bg-accent/20 hover:border-accent/30"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-1.5 text-xs font-bold uppercase tracking-widest text-black transition-all hover:bg-muted"
             >
               Publish
             </Link>
