@@ -12,6 +12,7 @@ const express_1 = require("../scanners/express");
 const openapi_1 = require("../scanners/openapi");
 const vite_react_1 = require("../scanners/vite-react");
 const supabase_functions_1 = require("../scanners/supabase-functions");
+const dart_1 = require("../scanners/dart");
 const utils_1 = require("../utils");
 async function init(cwd = process.cwd()) {
     const existingPath = (0, utils_1.resolveJinJsonPath)(cwd);
@@ -38,7 +39,12 @@ async function init(cwd = process.cwd()) {
         ...packageJson.dependencies,
         ...packageJson.devDependencies
     };
-    if (deps['next']) {
+    const hasNextApp = Boolean(deps['next'] ||
+        fs_1.default.existsSync(path_1.default.join(cwd, 'src/app')) ||
+        fs_1.default.existsSync(path_1.default.join(cwd, 'app')) ||
+        fs_1.default.existsSync(path_1.default.join(cwd, 'src/pages/api')) ||
+        fs_1.default.existsSync(path_1.default.join(cwd, 'pages/api')));
+    if (hasNextApp) {
         console.log('   Detected: Next.js');
         const intents = await (0, nextjs_1.scanNextJS)(cwd);
         detectedIntents.push(...intents);
@@ -61,6 +67,12 @@ async function init(cwd = process.cwd()) {
         const intents = await (0, vite_react_1.scanViteReact)(cwd);
         detectedIntents.push(...intents);
         console.log(`   Found ${intents.length} routes`);
+    }
+    if (fs_1.default.existsSync(path_1.default.join(cwd, 'pubspec.yaml'))) {
+        console.log('   Detected: Dart/Flutter project');
+        const intents = await (0, dart_1.scanDart)(cwd);
+        detectedIntents.push(...intents);
+        console.log(`   Found ${intents.length} routes/endpoints`);
     }
     if (fs_1.default.existsSync(path_1.default.join(cwd, 'supabase/functions'))) {
         console.log('   Detected: Supabase Edge Functions');
@@ -133,12 +145,12 @@ async function init(cwd = process.cwd()) {
     }
     console.log('\nNext steps:');
     console.log(`  1. Review ${path_1.default.relative(cwd, outputPath) || 'jin.json'} and fill in descriptions`);
-    console.log('  2. Run: npx @meetjin/cli validate');
+    console.log('  2. Run: npx @papercargo/jin-cli validate');
     console.log('  3. Commit and deploy your app');
     console.log(`     git add ${path_1.default.relative(cwd, outputPath) || 'jin.json'}`);
     console.log('     git commit -m "feat: add AIP intent map"');
     console.log('     git push');
-    console.log('  4. Once deployed, run: npx @meetjin/cli publish');
+    console.log('  4. Once deployed, run: npx @papercargo/jin-cli publish');
     console.log('     (your intent map must be live at');
     console.log('      yourdomain.com/.well-known/jin.json)');
 }

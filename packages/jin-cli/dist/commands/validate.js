@@ -90,7 +90,7 @@ function validate(jinJsonPath) {
 function validateAndPrint(cwd = process.cwd()) {
     const jinJsonPath = (0, utils_1.resolveJinJsonPath)(cwd);
     if (!jinJsonPath) {
-        console.log('✗ jin.json not found — run: npx jin init');
+        console.log('✗ jin.json not found — run: npx @papercargo/jin-cli init');
         process.exit(1);
     }
     const result = validate(jinJsonPath);

@@ -15,7 +15,7 @@ const utils_1 = require("../utils");
 function watch(cwd = process.cwd()) {
     const jinJsonPath = (0, utils_1.resolveJinJsonPath)(cwd);
     if (!jinJsonPath) {
-        console.log('✗ jin.json not found — run: npx @meetjin/cli init');
+        console.log('✗ jin.json not found — run: npx @papercargo/jin-cli init');
         process.exit(1);
     }
     console.log('👁  Watching for changes...\n');
@@ -57,7 +57,7 @@ function watch(cwd = process.cwd()) {
                 if (debounceTimer)
                     clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
-                    console.log(`\n⟳ ${filename} changed — consider re-running: npx @meetjin/cli init\n`);
+                    console.log(`\n⟳ ${filename} changed — consider re-running: npx @papercargo/jin-cli init\n`);
                 }, 500);
             });
             console.log(`   Watching: ${path_1.default.relative(cwd, dir)}/`);

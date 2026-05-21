@@ -1,4 +1,37 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -15,14 +48,23 @@ async function scanOpenAPI(filePath) {
     const intents = [];
     if (!fs_1.default.existsSync(filePath))
         return intents;
-    // Only support JSON for now (YAML would need a parser dep)
-    if (filePath.endsWith('.yaml') || filePath.endsWith('.yml')) {
-        console.log('   ⚠ YAML OpenAPI specs require the yaml package — skipping. Convert to JSON or install yaml.');
-        return intents;
-    }
     let spec;
     try {
-        spec = JSON.parse(fs_1.default.readFileSync(filePath, 'utf-8'));
+        const raw = fs_1.default.readFileSync(filePath, 'utf-8');
+        if (filePath.endsWith('.yaml') || filePath.endsWith('.yml')) {
+            try {
+                // @ts-ignore: optional YAML parser dependency
+                const yaml = await Promise.resolve().then(() => __importStar(require('yaml')));
+                spec = yaml.parse(raw);
+            }
+            catch (importError) {
+                console.log('   ⚠ YAML OpenAPI specs require the yaml package. Install yaml or use JSON.');
+                return intents;
+            }
+        }
+        else {
+            spec = JSON.parse(raw);
+        }
     }
     catch (e) {
         console.log(`   ⚠ Failed to parse ${path_1.default.basename(filePath)}`);

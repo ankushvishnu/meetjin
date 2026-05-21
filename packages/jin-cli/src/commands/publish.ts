@@ -63,7 +63,7 @@ export async function publish(options: { skipDeploy?: boolean } = {}, cwd: strin
 
     if (!isGitRepo) {
       console.log('  ⚠ Not a git repository')
-      console.log('  Deploy manually then re-run: npx @meetjin/cli publish --skip-deploy')
+      console.log('  Deploy manually then re-run: npx @papercargo/jin-cli publish --skip-deploy')
       process.exit(1)
     }
 

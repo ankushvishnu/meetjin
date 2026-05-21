@@ -161,12 +161,12 @@ export async function init(cwd: string = process.cwd()) {
 
   console.log('\nNext steps:')
   console.log(`  1. Review ${path.relative(cwd, outputPath) || 'jin.json'} and fill in descriptions`)
-  console.log('  2. Run: npx @meetjin/cli validate')
+  console.log('  2. Run: npx @papercargo/jin-cli validate')
   console.log('  3. Commit and deploy your app')
   console.log(`     git add ${path.relative(cwd, outputPath) || 'jin.json'}`)
   console.log('     git commit -m "feat: add AIP intent map"')
   console.log('     git push')
-  console.log('  4. Once deployed, run: npx @meetjin/cli publish')
+  console.log('  4. Once deployed, run: npx @papercargo/jin-cli publish')
   console.log('     (your intent map must be live at')
   console.log('      yourdomain.com/.well-known/jin.json)')
 }

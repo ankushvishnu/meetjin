@@ -58,7 +58,7 @@ async function publish(options = {}, cwd = process.cwd()) {
         }
         if (!isGitRepo) {
             console.log('  ⚠ Not a git repository');
-            console.log('  Deploy manually then re-run: npx @meetjin/cli publish --skip-deploy');
+            console.log('  Deploy manually then re-run: npx @papercargo/jin-cli publish --skip-deploy');
             process.exit(1);
         }
         const ans = await (0, utils_1.promptUser)('Deploy to GitHub and publish? (y/n): ');

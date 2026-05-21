@@ -94,7 +94,7 @@ export function validateAndPrint(cwd: string = process.cwd()) {
   const jinJsonPath = resolveJinJsonPath(cwd)
 
   if (!jinJsonPath) {
-    console.log('✗ jin.json not found — run: npx jin init')
+    console.log('✗ jin.json not found — run: npx @papercargo/jin-cli init')
     process.exit(1)
   }
 

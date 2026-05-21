@@ -7,8 +7,13 @@ exports.scanExpress = scanExpress;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const HTTP_METHOD_PATTERNS = [
-    // app.get / router.get / app.post etc.
-    /\b(?:app|router|server)\.(get|post|put|patch|delete)\s*\(\s*['"`]([^'"`]+)['"`]/gi,
+    // app.get / router.get / server.get / router.post etc.
+    /\b(?:app|router|server)\.(get|post|put|patch|delete|all)\s*\(\s*['"`']([^'"`]+)['"`]/gi,
+    // router.route('/path').get(...)
+    /\b(?:app|router|server)\.route\s*\(\s*['"`']([^'"`]+)['"`]\s*\)\s*\.\s*(get|post|put|patch|delete|all)/gi,
+    // fastify/server.route({ method: 'GET', url: '/path' })
+    /\b(?:server|app|fastify)\.route\s*\(\s*\{[^}]*method\s*:\s*['"`]?(GET|POST|PUT|PATCH|DELETE|ALL)['"`]?,[^}]*url\s*:\s*['"`]([^'"`]+)['"`]/gi,
+    /\b(?:server|app|fastify)\.route\s*\(\s*\{[^}]*url\s*:\s*['"`]([^'"`]+)['"`],[^}]*method\s*:\s*['"`]?(GET|POST|PUT|PATCH|DELETE|ALL)['"`]?/gi,
 ];
 /**
  * Express / Koa / Fastify-style scanner.
@@ -71,8 +76,19 @@ function scanFile(filePath, intents) {
         pattern.lastIndex = 0;
         let match;
         while ((match = pattern.exec(content)) !== null) {
-            const method = match[1].toUpperCase();
-            const endpoint = match[2];
+            let method = match[1].toUpperCase();
+            let endpoint = match[2];
+            // if pattern matched router.route('/path').get, swap groups
+            if (endpoint.startsWith('/')) {
+                // common case: method is group1 and endpoint is group2
+            }
+            else if (method.startsWith('/')) {
+                endpoint = method;
+                method = match[2].toUpperCase();
+            }
+            if (method === 'ALL') {
+                method = 'GET';
+            }
             // Skip middleware-like patterns (no leading /)
             if (!endpoint.startsWith('/'))
                 continue;

@@ -1,5 +1,5 @@
 {
-  "name": "@meetjin/cli",
+  "name": "@papercargo/jin-cli",
   "version": "0.1.0",
   "description": "Agent Intent Protocol — make your app agent-ready in minutes",
   "main": "dist/index.js",
@@ -23,6 +23,9 @@
   ],
   "author": "Papercargo",
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/meetjin/jin"
