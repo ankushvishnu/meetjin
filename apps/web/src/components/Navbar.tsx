@@ -7,9 +7,11 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white border border-white/20 transition-all group-hover:scale-110">
-              <span className="text-black font-black text-xs">J</span>
-            </div>
+            <img 
+              src="/assets/logos/logo_2.svg" 
+              alt="Jin Logo" 
+              className="h-8 w-auto transition-all group-hover:scale-110"
+            />
             <span className="font-bold text-xl tracking-tighter text-foreground uppercase">
               meetjin
             </span>
