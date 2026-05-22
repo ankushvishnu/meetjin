@@ -182,7 +182,7 @@ export function PublishFlow() {
       )}
 
       {/* Step 2: Show API Key */}
-      {step === "verify" && (
+      {false && (
         <div className="glass rounded-2xl p-8 border border-border animate-fade-in">
           <h2 className="text-2xl font-bold text-foreground mb-2">Your API Key</h2>
           <p className="text-muted text-sm mb-6">
