@@ -16,12 +16,27 @@ export const metadata: Metadata = {
   title: "Jin — Agent Intent Protocol Registry",
   description:
     "The open registry for AI agent intents. Discover, publish, and connect machine-readable intent maps for the agentic web.",
+  icons: {
+    icon: [
+      { url: "/assets/logos/logo_favicon_32.png", sizes: "32x32", type: "image/png" },
+      { url: "/assets/logos/logo_favicon_64.png", sizes: "64x64", type: "image/png" },
+    ],
+    apple: "/assets/logos/logo_favicon_64.png",
+  },
   openGraph: {
     title: "Jin — Agent Intent Protocol Registry",
     description:
       "The open registry for AI agent intents. Make your app agent-ready with a single JSON file.",
     url: "https://meetjin.com",
     siteName: "meetjin.com",
+    images: [
+      {
+        url: "/assets/logos/logo_og.png",
+        width: 1200,
+        height: 630,
+        alt: "Jin — Agent Intent Protocol",
+      },
+    ],
     type: "website",
   },
 };

@@ -40,7 +40,7 @@ begin
     i.destructive,
     a.is_verified,
     a.is_community,
-    ts_rank(i.search_vector, plainto_tsquery('english', query)) as rank
+    ts_rank(i.search_vector, plainto_tsquery('english', query))::float as rank
   from intents i
   join apps a on i.app_id = a.id
   where

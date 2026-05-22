@@ -5,7 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ApiCard } from "@/components/ApiCard";
 import { IntentPanel } from "@/components/IntentPanel";
-import { ApiTestAgent } from "@/components/ApiTestAgent";
+import { ApiAgentConsole } from "@/components/ApiAgentConsole";
 import apis, { CommunityApi } from "@/data/community-apis";
 
 const categories = [
@@ -78,7 +78,7 @@ export default function ExplorePage() {
       <main className="flex-1 bg-background">
         <section className="border-b border-border bg-card/10">
           <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-            <div className="grid gap-16 lg:grid-cols-[1fr_0.95fr] lg:items-center">
+            <div className="grid gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] lg:items-center w-full min-w-0">
               <div className="space-y-6">
                 <div className="inline-flex items-center gap-3 rounded-full border border-border bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.36em] text-muted">
                   API Playground
@@ -109,42 +109,7 @@ export default function ExplorePage() {
                 </div>
               </div>
 
-              <div className="rounded-[2rem] border border-border bg-card p-8 shadow-[0_35px_80px_rgba(0,0,0,0.22)]">
-                <p className="text-sm uppercase tracking-[0.35em] text-muted">Agent Console</p>
-                <div className="mt-6 rounded-3xl border border-border bg-background/90 p-6 font-mono text-sm text-foreground">
-                  <div className="mb-4 flex items-center justify-between">
-                    <span className="text-xs uppercase tracking-[0.35em] text-muted">Live request</span>
-                    <span className="rounded-full bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.35em] text-muted">real-time</span>
-                  </div>
-                  <pre className="overflow-x-auto whitespace-pre-wrap leading-7">
-                    <code>
-{`GET /api/v1/trainers
-Host: api.spotter.app
-Accept: application/json
-
-# response
-200 OK
-{
-  "data": [ ... ]
-}`}
-                  </code>
-                  </pre>
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <a
-                      href="/build"
-                      className="inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-background transition-all hover:bg-accent/90"
-                    >
-                      Open Agent Console
-                    </a>
-                    <a
-                      href="/publish"
-                      className="inline-flex items-center justify-center rounded-full border border-border px-5 py-3 text-sm font-semibold text-foreground transition-all hover:border-accent/20 hover:text-accent"
-                    >
-                      Publish Intent Map
-                    </a>
-                  </div>
-                </div>
-              </div>
+              <ApiAgentConsole />
             </div>
           </div>
         </section>
