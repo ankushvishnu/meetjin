@@ -905,13 +905,13 @@ const communityApis: CommunityApi[] = [
   },
   {
     slug: "yfinance",
-    name: "YFinance",
+    name: "Alpha Vantage (Stocks)",
     description: "Get real-time stock quotes, historical data, and company information.",
     category: "finance",
     emoji: "📈",
     requiresAuth: false,
-    intentMapUrl: "https://yfinance.api.example.com/.well-known/jin.json",
-    baseUrl: "https://api.example.com/yfinance",
+    intentMapUrl: "https://www.alphavantage.co/.well-known/jin.json",
+    baseUrl: "https://www.alphavantage.co",
     intents: [
       {
         id: "get_stock_quote",
@@ -920,13 +920,25 @@ const communityApis: CommunityApi[] = [
         triggers: ["get stock price", "stock quote", "lookup ticker"],
         category: "finance",
         method: "GET",
-        endpoint: "/quote/{ticker}",
+        endpoint: "/query",
         parameters: {
-          ticker: {
+          function: {
+            type: "string",
+            description: "API function to call.",
+            required: true,
+            default: "GLOBAL_QUOTE",
+          },
+          symbol: {
             type: "string",
             description: "Stock ticker symbol (e.g., AAPL, GOOGL).",
             required: true,
-            example: "AAPL",
+            example: "IBM",
+          },
+          apikey: {
+            type: "string",
+            description: "API Key.",
+            required: false,
+            default: "demo",
           },
         },
         requires_auth: false,
@@ -940,13 +952,25 @@ const communityApis: CommunityApi[] = [
         triggers: ["historical stock data", "ohlc data", "historical prices"],
         category: "finance",
         method: "GET",
-        endpoint: "/historical/{ticker}",
+        endpoint: "/query",
         parameters: {
-          ticker: {
+          function: {
+            type: "string",
+            description: "API function to call.",
+            required: true,
+            default: "TIME_SERIES_DAILY",
+          },
+          symbol: {
             type: "string",
             description: "Stock ticker symbol.",
             required: true,
-            example: "AAPL",
+            example: "IBM",
+          },
+          apikey: {
+            type: "string",
+            description: "API Key.",
+            required: false,
+            default: "demo",
           },
           start_date: {
             type: "string",

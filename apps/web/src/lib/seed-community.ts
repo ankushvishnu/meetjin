@@ -79,7 +79,7 @@ export async function seedCommunityApis() {
     // Seed intents
     const intentsToInsert = api.intents.map(intent => ({
       app_id: app.id,
-      id: intent.id,
+      intent_id: intent.id,
       name: intent.name,
       description: intent.description,
       triggers: intent.triggers,
