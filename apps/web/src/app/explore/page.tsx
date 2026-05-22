@@ -126,6 +126,20 @@ Accept: application/json
 }`}
                   </code>
                   </pre>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <a
+                      href="/build"
+                      className="inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-background transition-all hover:bg-accent/90"
+                    >
+                      Open Agent Console
+                    </a>
+                    <a
+                      href="/publish"
+                      className="inline-flex items-center justify-center rounded-full border border-border px-5 py-3 text-sm font-semibold text-foreground transition-all hover:border-accent/20 hover:text-accent"
+                    >
+                      Publish Intent Map
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
