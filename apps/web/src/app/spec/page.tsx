@@ -1,14 +1,26 @@
 import React from 'react';
 import Link from 'next/link';
+import { Navbar } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
+
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'AIP Specification — Agent Intent Protocol | meetjin',
+  description:
+    'Read the Agent Intent Protocol specification. A lightweight, open standard that gives any web application a machine-readable intent layer.',
+};
 
 export default function SpecPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-white selection:text-black">
+    <>
+      <Navbar />
+      <main className="flex-1 bg-background text-foreground selection:bg-white selection:text-black">
       <div className="mx-auto max-w-4xl px-6 py-24 lg:px-8">
         
         {/* Hero Section */}
         <div className="mb-24">
-          <h1 className="text-6xl font-black tracking-tighter uppercase mb-6 leading-none">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase mb-6 leading-none">
             The Agent <br />
             <span className="text-muted">Intent Protocol</span>
           </h1>
@@ -38,7 +50,7 @@ export default function SpecPage() {
                 APIs exist, but there is no standard way for an agent to discover what they do or how to authenticate without custom engineering.
               </p>
             </div>
-            <div className="p-8 border border border-border bg-card rounded-2xl">
+            <div className="p-8 border border-border bg-card rounded-2xl">
               <h3 className="text-lg font-bold mb-4 uppercase tracking-tight">Trust Deficit</h3>
               <p className="text-muted leading-relaxed">
                 Agents have no way to verify if an endpoint is legitimate or safe, making every integration a leap of faith.
@@ -168,6 +180,8 @@ export default function SpecPage() {
         </section>
 
       </div>
-    </div>
+      </main>
+      <Footer />
+    </>
   );
 }

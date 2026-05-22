@@ -56,11 +56,14 @@ export default function ExplorePage() {
       setLiveStatus((prev) => ({ ...prev, [api.slug]: "loading" }));
       const pingUrl = getPingUrl(api);
 
-      fetch(pingUrl, { method: "GET" })
-        .then((res) => {
+      // Use no-cors mode to avoid CORS errors in the console.
+      // In no-cors mode we can't read the response, but a resolved
+      // promise means the server is reachable.
+      fetch(pingUrl, { method: "HEAD", mode: "no-cors" })
+        .then(() => {
           setLiveStatus((prev) => ({
             ...prev,
-            [api.slug]: res.ok ? "ok" : "error",
+            [api.slug]: "ok",
           }));
         })
         .catch(() => {
@@ -81,7 +84,7 @@ export default function ExplorePage() {
                   API Playground
                 </div>
                 <div className="space-y-4">
-                  <h1 className="text-5xl font-black uppercase tracking-tight text-foreground sm:text-6xl">
+                  <h1 className="text-3xl font-black uppercase tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                     Explore live intent maps.
                   </h1>
                   <p className="max-w-2xl text-lg leading-8 text-muted">

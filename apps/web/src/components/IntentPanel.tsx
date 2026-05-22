@@ -362,7 +362,7 @@ export function IntentPanel({ api, open, onClose }: IntentPanelProps) {
               </div>
 
               <a
-                href="/docs/quickstart"
+                href="/spec"
                 className="inline-flex items-center gap-2 rounded-2xl border border-border bg-card px-5 py-3 text-sm font-semibold text-foreground transition-all hover:bg-card-hover"
               >
                 Publish your own →

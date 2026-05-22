@@ -181,34 +181,7 @@ export function PublishFlow() {
         </div>
       )}
 
-      {/* Step 2: Show API Key */}
-      {false && (
-        <div className="glass rounded-2xl p-8 border border-border animate-fade-in">
-          <h2 className="text-2xl font-bold text-foreground mb-2">Your API Key</h2>
-          <p className="text-muted text-sm mb-6">
-            Save this key securely. You&apos;ll need it for publishing via CLI too.
-          </p>
 
-          <div className="rounded-xl bg-card border border-accent/20 p-4 mb-6">
-            <div className="text-xs text-muted mb-2">API Key</div>
-            <code className="text-sm text-accent font-mono break-all select-all">{apiKey}</code>
-          </div>
-
-          <div className="rounded-xl bg-card border border-border p-4 mb-8">
-            <div className="text-xs text-muted mb-2">CLI usage</div>
-            <code className="text-sm text-foreground font-mono">
-              JIN_API_KEY={apiKey.slice(0, 12)}... npx @meetjin/cli publish
-            </code>
-          </div>
-
-          <button
-            onClick={() => setStep("upload")}
-            className="w-full rounded-xl bg-accent px-6 py-3.5 text-sm font-semibold text-background transition-all hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/20"
-          >
-            Continue to Publish
-          </button>
-        </div>
-      )}
 
       {/* Step 3: Publish */}
       {step === "upload" && (
@@ -273,7 +246,6 @@ export function PublishFlow() {
               onClick={() => {
                 setStep("email");
                 setPublishResult(null);
-                setApiKey("");
                 setIntentMapUrl("");
               }}
               className="inline-flex items-center gap-2 rounded-xl border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:bg-card-hover"

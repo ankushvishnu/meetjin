@@ -64,7 +64,7 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="mt-12 border-t border-border pt-8 flex items-center justify-between">
+        <div className="mt-12 border-t border-border pt-8 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted">
             &copy; {new Date().getFullYear()} Papercargo. Agent Intent Protocol v0.1
           </p>

@@ -31,7 +31,31 @@ export function RegistrySearch({ initialApps }: { initialApps: App[] }) {
       const res = await fetch(`/api/v1/registry/search?q=${encodeURIComponent(q)}`);
       const data = await res.json();
       if (res.ok && data.results) {
-        setApps(data.results);
+        // The search API returns { app: {...}, intent: {...} } objects.
+        // Map them to the flat App shape expected by this component,
+        // deduplicating by app id.
+        const seen = new Set<string>();
+        const mapped: App[] = [];
+        for (const result of data.results) {
+          const app = result.app ?? result;
+          const id = app.id;
+          if (id && !seen.has(id)) {
+            seen.add(id);
+            mapped.push({
+              id: app.id,
+              name: app.name,
+              slug: app.slug,
+              description: app.description ?? "",
+              url: app.url ?? "",
+              categories: app.categories ?? [],
+              total_intents: app.total_intents ?? 0,
+              agent_hits: app.agent_hits ?? 0,
+              is_verified: app.is_verified ?? false,
+              is_community: app.is_community ?? false,
+            });
+          }
+        }
+        setApps(mapped);
       }
     } catch {
       // Silently fail, keep showing current results

@@ -22,7 +22,7 @@ export default function Home() {
                 </div>
                 <div className="space-y-6">
                   <p className="text-sm uppercase tracking-[0.4em] text-muted">Agent Intent Protocol</p>
-                  <h1 className="text-6xl font-black uppercase tracking-tight leading-[0.94] text-foreground sm:text-7xl">
+                  <h1 className="text-4xl font-black uppercase tracking-tight leading-[0.94] text-foreground sm:text-6xl lg:text-7xl">
                     Let agents understand your app.
                   </h1>
                   <p className="max-w-xl text-xl leading-9 text-muted">
@@ -136,7 +136,7 @@ export default function Home() {
 
         <section className="border-t border-border">
           <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8 lg:py-32">
-            <div className="grid gap-6 lg:grid-cols-3">
+            <div className="grid gap-6 grid-cols-2 lg:grid-cols-3">
               {[
                 { title: "Commerce", label: "Retail, payments, orders" },
                 { title: "Travel", label: "Bookings, itineraries, search" },
