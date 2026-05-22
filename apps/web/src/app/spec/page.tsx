@@ -70,7 +70,7 @@ export default function SpecPage() {
                 </div>
                 <div className="flex-1 bg-black border border-border rounded-2xl p-6 font-mono text-xs text-muted overflow-hidden">
                   <div className="flex gap-2 mb-4">
-                    <div className="w-2 h-2 rounded-full bg-red-500" />
+                    <div className="w-2 h-2 rounded-full bg-[#16c88d]" />
                     <div className="w-2 h-2 rounded-full bg-yellow-500" />
                     <div className="w-2 h-2 rounded-full bg-green-500" />
                   </div>
@@ -115,7 +115,7 @@ export default function SpecPage() {
                 </div>
                 <div className="flex-1 bg-black border border-border rounded-2xl p-6 font-mono text-xs text-muted overflow-hidden">
                   <div className="flex gap-2 mb-4">
-                    <div className="w-2 h-2 rounded-full bg-red-500" />
+                    <div className="w-2 h-2 rounded-full bg-[#16c88d]" />
                     <div className="w-2 h-2 rounded-full bg-yellow-500" />
                     <div className="w-2 h-2 rounded-full bg-green-500" />
                   </div>
@@ -151,7 +151,7 @@ export default function SpecPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link 
-                href="https://github.com/meetjin/jin" 
+                href="https://github.com/ankushvishnu/meetjin" 
                 target="_blank" 
                 className="px-8 py-4 bg-black text-white font-bold uppercase tracking-widest text-xs rounded-full hover:bg-muted transition-all"
               >

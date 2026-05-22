@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 
-type Step = "email" | "verify" | "upload" | "done";
+type Step = "email" | "upload" | "done";
 
 export function PublishFlow() {
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [company, setCompany] = useState("");
   const [website, setWebsite] = useState("");
-  const [apiKey, setApiKey] = useState("");
   const [intentMapUrl, setIntentMapUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -24,21 +24,9 @@ export function PublishFlow() {
     setIsLoading(true);
 
     try {
-      const res = await fetch("/api/v1/publisher/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, website }),
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || "Registration failed.");
-        setIsLoading(false);
-        return;
-      }
-
-      setApiKey(data.api_key);
-      setStep("verify");
+      // We no longer need to register for an API key first.
+      // We can move directly to the upload step.
+      setStep("upload");
     } catch (err: any) {
       setError(err.message || "Network error.");
     } finally {
@@ -70,11 +58,11 @@ export function PublishFlow() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
           intent_map_url: intentMapUrl,
           intent_map: intentMap,
+          publisher: { name, email, company, website },
         }),
       });
       const pubData = await pubRes.json();
@@ -99,12 +87,11 @@ export function PublishFlow() {
       {/* Progress */}
       <div className="flex items-center gap-2 mb-10">
         {[
-          { key: "email", label: "Register" },
-          { key: "verify", label: "API Key" },
+          { key: "email", label: "Details" },
           { key: "upload", label: "Publish" },
           { key: "done", label: "Done" },
         ].map((s, i) => {
-          const steps: Step[] = ["email", "verify", "upload", "done"];
+          const steps: Step[] = ["email", "upload", "done"];
           const currentIdx = steps.indexOf(step);
           const isActive = steps.indexOf(s.key as Step) <= currentIdx;
           return (
@@ -121,7 +108,7 @@ export function PublishFlow() {
               <span className={`text-xs ${isActive ? "text-foreground" : "text-muted"} hidden sm:block`}>
                 {s.label}
               </span>
-              {i < 3 && <div className={`flex-1 h-px ${isActive ? "bg-accent/30" : "bg-border"}`} />}
+              {i < 2 && <div className={`flex-1 h-px ${isActive ? "bg-accent/30" : "bg-border"}`} />}
             </div>
           );
         })}
@@ -149,7 +136,7 @@ export function PublishFlow() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Your Company"
+                placeholder="Your Name"
                 className="w-full px-4 py-2.5 rounded-lg bg-background border border-border text-foreground text-sm focus:border-accent focus:outline-none transition-colors"
               />
             </div>
@@ -160,6 +147,16 @@ export function PublishFlow() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="dev@yourcompany.com"
+                className="w-full px-4 py-2.5 rounded-lg bg-background border border-border text-foreground text-sm focus:border-accent focus:outline-none transition-colors"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-muted mb-1.5">Company</label>
+              <input
+                type="text"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                placeholder="Your Company"
                 className="w-full px-4 py-2.5 rounded-lg bg-background border border-border text-foreground text-sm focus:border-accent focus:outline-none transition-colors"
               />
             </div>
@@ -178,7 +175,7 @@ export function PublishFlow() {
               disabled={isLoading}
               className="w-full rounded-xl bg-accent px-6 py-3.5 text-sm font-semibold text-background transition-all hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/20 disabled:opacity-50"
             >
-              {isLoading ? "Registering..." : "Get API Key"}
+              {isLoading ? "Continuing..." : "Continue to Publish"}
             </button>
           </div>
         </div>

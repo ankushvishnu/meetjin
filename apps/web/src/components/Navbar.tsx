@@ -10,11 +10,8 @@ export function Navbar() {
             <img 
               src="/assets/logos/logo_2.svg" 
               alt="Jin Logo" 
-              className="h-8 w-auto transition-all group-hover:scale-110"
+              className="h-12 w-auto transition-all group-hover:scale-110"
             />
-            <span className="font-bold text-xl tracking-tighter text-foreground uppercase">
-              meetjin
-            </span>
           </Link>
 
           {/* Navigation */}
