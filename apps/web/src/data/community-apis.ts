@@ -905,14 +905,14 @@ const communityApis: CommunityApi[] = [
     ],
   },
   {
-    slug: "yfinance",
-    name: "YFinance (Proxy)",
+    slug: "alphavantage",
+    name: "Alpha Vantage (Stocks)",
     description: "Get real-time stock quotes and historical data.",
     category: "finance",
     emoji: "📈",
     requiresAuth: false,
     intentMapUrl: "https://meetjin.com/.well-known/jin.json",
-    baseUrl: "/api/v1/community/yfinance",
+    baseUrl: "/api/v1/community/alphavantage",
     intents: [
       {
         id: "get_stock_quote",
@@ -921,9 +921,15 @@ const communityApis: CommunityApi[] = [
         triggers: ["get stock price", "stock quote", "lookup ticker", "stock price"],
         category: "finance",
         method: "GET",
-        endpoint: "/quote/{ticker}",
+        endpoint: "/query",
         parameters: {
-          ticker: {
+          function: {
+            type: "string",
+            description: "API function to call.",
+            required: true,
+            default: "GLOBAL_QUOTE",
+          },
+          symbol: {
             type: "string",
             description: "Stock ticker symbol (e.g., AAPL, GOOGL).",
             required: true,
@@ -937,45 +943,19 @@ const communityApis: CommunityApi[] = [
       {
         id: "get_historical_data",
         name: "Get Historical Data",
-        description: "Retrieve historical OHLC data for a stock over a date range.",
+        description: "Retrieve historical daily data for a stock.",
         triggers: ["historical stock data", "ohlc data", "historical prices"],
         category: "finance",
         method: "GET",
-        endpoint: "/historical/{ticker}",
+        endpoint: "/query",
         parameters: {
-          ticker: {
+          function: {
             type: "string",
-            description: "Stock ticker symbol.",
+            description: "API function to call.",
             required: true,
-            example: "AAPL",
+            default: "TIME_SERIES_DAILY",
           },
-          interval: {
-            type: "string",
-            description: "Data interval (e.g., 1d, 1wk, 1mo).",
-            required: false,
-            default: "1d",
-          },
-          range: {
-            type: "string",
-            description: "Data range (e.g., 1mo, 1y, max).",
-            required: false,
-            default: "1mo",
-          },
-        },
-        requires_auth: false,
-        destructive: false,
-        confirmation_required: false,
-      },
-      {
-        id: "get_company_info",
-        name: "Get Company Info",
-        description: "Retrieve detailed company information including sector, employees, and website.",
-        triggers: ["company info", "stock info", "about company"],
-        category: "finance",
-        method: "GET",
-        endpoint: "/info/{ticker}",
-        parameters: {
-          ticker: {
+          symbol: {
             type: "string",
             description: "Stock ticker symbol.",
             required: true,
