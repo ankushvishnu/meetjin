@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://meetjin.com/jin-logo.svg" alt="Jin" width="120" />
+<img src="logo_readme.png" alt="Jin" width="120" />
 
 # Jin
 

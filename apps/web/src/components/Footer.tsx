@@ -53,11 +53,6 @@ export function Footer() {
                   Discussions
                 </a>
               </li>
-              <li>
-                <a href="https://meetjin.com/working-group" className="text-sm text-muted hover:text-foreground transition-colors">
-                  Working Group
-                </a>
-              </li>
             </ul>
           </div>
           <div>
