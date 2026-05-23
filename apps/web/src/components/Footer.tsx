@@ -9,7 +9,7 @@ export function Footer() {
             <h3 className="text-sm font-semibold text-foreground">Protocol</h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <a href="https://github.com/ankushvishnu/meetjin.git" className="text-sm text-muted hover:text-foreground transition-colors">
+                <a href="https://github.com/ankushvishnu/meetjin" className="text-sm text-muted hover:text-foreground transition-colors">
                   AIP Specification
                 </a>
               </li>
@@ -39,7 +39,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="https://github.com/ankushvishnu/meetjin.git" className="text-sm text-muted hover:text-foreground transition-colors">
+                <a href="https://github.com/ankushvishnu/meetjin" className="text-sm text-muted hover:text-foreground transition-colors">
                   GitHub
                 </a>
               </li>
@@ -49,7 +49,7 @@ export function Footer() {
             <h3 className="text-sm font-semibold text-foreground">Community</h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <a href="https://github.com/ankushvishnu/meetjin.git/discussions" className="text-sm text-muted hover:text-foreground transition-colors">
+                <a href="https://github.com/ankushvishnu/meetjin/discussions" className="text-sm text-muted hover:text-foreground transition-colors">
                   Discussions
                 </a>
               </li>
