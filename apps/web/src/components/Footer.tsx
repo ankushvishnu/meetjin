@@ -9,7 +9,7 @@ export function Footer() {
             <h3 className="text-sm font-semibold text-foreground">Protocol</h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <a href="https://github.com/ankushvishnu/meetjin" className="text-sm text-muted hover:text-foreground transition-colors">
+                <a href="https://github.com/meetjin/jin" className="text-sm text-muted hover:text-foreground transition-colors">
                   AIP Specification
                 </a>
               </li>
@@ -21,6 +21,11 @@ export function Footer() {
               <li>
                 <Link href="/build" className="text-sm text-muted hover:text-foreground transition-colors">
                   Playground
+                </Link>
+              </li>
+              <li>
+                <Link href="/integrations" className="text-sm text-muted hover:text-foreground transition-colors">
+                  Integrations
                 </Link>
               </li>
             </ul>
@@ -39,7 +44,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="https://github.com/ankushvishnu/meetjin" className="text-sm text-muted hover:text-foreground transition-colors">
+                <a href="https://github.com/meetjin/jin" className="text-sm text-muted hover:text-foreground transition-colors">
                   GitHub
                 </a>
               </li>
@@ -49,7 +54,7 @@ export function Footer() {
             <h3 className="text-sm font-semibold text-foreground">Community</h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <a href="https://github.com/ankushvishnu/meetjin/discussions" className="text-sm text-muted hover:text-foreground transition-colors">
+                <a href="https://github.com/meetjin/jin/discussions" className="text-sm text-muted hover:text-foreground transition-colors">
                   Discussions
                 </a>
               </li>

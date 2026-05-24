@@ -163,7 +163,7 @@ export default function SpecPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link 
-                href="https://github.com/ankushvishnu/meetjin" 
+                href="https://github.com/meetjin/jin" 
                 target="_blank" 
                 className="px-8 py-4 bg-black text-white font-bold uppercase tracking-widest text-xs rounded-full hover:bg-muted transition-all"
               >

@@ -40,6 +40,12 @@ export function Navbar() {
               Build
             </Link>
             <Link
+              href="/integrations"
+              className="px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-muted hover:text-foreground transition-all"
+            >
+              Integrations
+            </Link>
+            <Link
               href="/spec"
               className="px-3 py-1.5 text-xs font-medium uppercase tracking-widest text-muted hover:text-foreground transition-all"
             >
@@ -91,6 +97,7 @@ export function Navbar() {
             { href: "/registry", label: "Registry" },
             { href: "/explore", label: "Explore" },
             { href: "/build", label: "Build" },
+            { href: "/integrations", label: "Integrations" },
             { href: "/spec", label: "Spec" },
           ].map((link) => (
             <Link
