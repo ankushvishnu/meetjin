@@ -72,7 +72,7 @@ export default function SpecPage() {
                 <div className="flex-1">
                   <h3 className="text-xl font-bold mb-4 uppercase tracking-tight">1. Automated Discovery</h3>
                   <p className="text-muted leading-relaxed mb-6">
-                    The <code className="bg-white/10 px-2 py-1 rounded text-white">@meetjin/cli</code> scans your codebase, detecting Next.js, Express, and OpenAPI specs to extract your app's intent surface.
+                    The <code className="bg-white/10 px-2 py-1 rounded text-white">@papercargo/jin-cli</code> scans your codebase, detecting Next.js, Express, and OpenAPI specs to extract your app's intent surface.
                   </p>
                   <div className="font-mono text-xs p-4 bg-black border border-border rounded-lg text-muted">
                     $ npx jin init <br />

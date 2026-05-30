@@ -4,12 +4,13 @@
 
 # Jin
 
-### The open standard that makes the web readable for AI agents.
+### The open infrastructure standard for the agentic web. 
+**A dual-sided protocol for machine-readable routing (`jin.json`) and zero-latency perimeter security.**
 
+[![npm downloads](https://img.shields.io/npm/dw/@papercargo/jin-cli?style=flat-square&color=emerald)](https://www.npmjs.com/package/@papercargo/jin-cli)
 [![AIP Version](https://img.shields.io/badge/AIP-v0.1%20Open%20Draft-6366f1?style=flat-square)](https://meetjin.com/spec)
 [![npm](https://img.shields.io/npm/v/@papercargo/jin-cli?style=flat-square&color=6366f1)](https://www.npmjs.com/package/@papercargo/jin-cli)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-6366f1?style=flat-square)](LICENSE)
-[![Spec License: CC0](https://img.shields.io/badge/Spec-CC0%20Public%20Domain-6366f1?style=flat-square)](LICENSE-SPEC)
 [![Registry](https://img.shields.io/badge/Registry-meetjin.com-6366f1?style=flat-square)](https://meetjin.com/registry)
 
 **[Registry](https://meetjin.com/registry) · [Explore](https://meetjin.com/explore) · [Spec](https://meetjin.com/spec) · [Publish your app](https://meetjin.com)**
@@ -42,6 +43,18 @@ This file — `jin.json` — is to AI agents what `sitemap.xml` is to search eng
 
 ---
 
+## 🚀 New in v0.2.2
+
+Version `0.2.2` is an all-inclusive framework and security update adding the **Jin Shield** cryptographic gateway boundary, support for ten major backend ecosystems, deep OpenAPI spec crawlers, and advanced parameter normalizations:
+
+* **🛡️ Universal Jin Shield Security Perimeter**: Active gateway boundary protecting your endpoints against rogue scrapers. Auto-scans your workspace to generate zero-hop, in-memory RS256 token verification middlewares and guards for Express, Next.js, Hono, Fastify, NestJS, tRPC, FastAPI, Django, Flask, Laravel, and Rails.
+* **10 New Framework Scanners**: Out-of-the-box static route extraction for **FastAPI**, **Django REST Framework**, **Flask**, **Laravel**, **Ruby on Rails**, **Fastify**, **Hono**, **NestJS**, **tRPC**, and **OpenAPI**.
+* **Stateful Lexical Router Traversal**: Recursively traverses multi-level nested routers (like in tRPC) to generate unified dot-notation endpoint schemas (`/api/trpc/posts.create`).
+* **Recursive Workspace OpenAPI Spec Discoverer**: Deep crawls your workspace recursively to automatically discover and import OpenAPI/Swagger configurations for any other backend stacks.
+* **Advanced Parameter Normalization**: Automatically converts and maps complex path signatures (including typed path variables, catch-alls, regex filters, and optional parameters) to standard AIP-compliant formats.
+
+---
+
 ## Get started in 3 minutes
 
 ```bash
@@ -54,11 +67,57 @@ npx @papercargo/jin-cli init
 # 3. Validate
 npx @papercargo/jin-cli validate
 
-# 4. Publish to the registry
+# 4. Activate the security shield
+npx @papercargo/jin-cli shield
+
+# 5. Publish to the registry
 npx @papercargo/jin-cli publish
 ```
 
-Your app is now discoverable by every AI agent in the world.
+Your app is now cryptographically secured and discoverable by every compliant AI agent in the world.
+
+---
+
+## 🛡️ Jin Shield Security Perimeter
+
+### The "Take It or Leave It" Boundary
+Jin Shield flips the scraping paradigm by enforcing a strict protocol boundary before requests ever touch your controllers.
+
+```text
+[ Incoming Request ]
+         │
+         ▼
+ ┌───────────────┐
+ │  Jin Shield   │ ◄─── Cross-references JWKS public keys in-memory
+ └───────┬───────┘
+         │
+         ├─► [ Verified Jin Agent ] ──► (200 OK) Native millisecond execution
+         │
+         └─► [ Unverified Scraper ] ──► (403 Forbidden) "Read jin.json or leave."
+```
+[Test A] Simulating Rogue Scraper hitting protected route...
+✓ [Test A SUCCESS] Scraper blocked immediately by Jin Shield gateway boundary!
+
+[Test B] Simulating verified Jin Agent with cryptographic passport...
+✓ [Test B SUCCESS] Verified Jin Agent passed cryptographic check and accessed route!
+
+Once you have declared your app capabilities, you can activate the **Jin Shield** trust perimeter to protect your backend gateway. It intercepts incoming traffic, verifies cryptographic agent passports, and blocks rogue, non-compliant scrapers while passing verified AI agents that match your local `jin.json` specification.
+
+### Key Features:
+* **Zero-Latency (In-Memory Verification)**: Resolves rotated public keys from `meetjin.com` once upon server boot and caches them. All signatures are verified locally in-memory via asymmetric RS256, eliminating per-request network hops.
+* **Exact Intent Routing**: Decodes agent identity tokens and asserts that the `intent_id` claim matches the requested path and method declared in your local `jin.json`.
+* **12 Framework Adapters**: The CLI automatically scans your project and generates self-contained native adapters for:
+  * **JavaScript/TypeScript**: Express, Next.js (App & Pages Routers), Hono, Fastify, NestJS Guards, and tRPC.
+  * **Python**: FastAPI, Flask, and Django.
+  * **Enterprise Blueprints**: PHP Laravel and Ruby on Rails.
+* **Basic Metrics**: Track active execution counters in-memory.
+* **Strict Fallback boundary**: Short-circuits unauthorized agent hits or rogue scrapers with an HTTP 403 Forbidden, pointing them directly to the server's `/.well-known/jin.json` protocol map ("take it or leave it").
+
+To activate the shield inside your codebase:
+```bash
+npx @papercargo/jin-cli shield
+```
+Follow the generated framework-specific setup logs to wire it up!
 
 ---
 
@@ -185,18 +244,27 @@ Test 20 real APIs with their AIP intent maps at **[meetjin.com/explore](https://
 | `jin init` | Scan codebase, generate `jin.json` scaffold |
 | `jin validate` | Validate against AIP spec |
 | `jin serve` | Serve locally at `/.well-known/jin.json` |
+| `jin shield` | Activate the universal Jin Shield security perimeter |
 | `jin publish` | Deploy and register with meetjin.com |
 
 ### Framework support
 
-| Framework | Status |
-|-----------|--------|
-| Next.js (App + Pages Router) | ✅ Supported |
-| React Router (Vite) | ✅ Supported |
-| Express | ✅ Supported |
-| Supabase Edge Functions | ✅ Supported |
-| FastAPI / Django | 🔄 Coming v0.2 |
-| Rails | 🔄 Coming v0.2 |
+| Framework | Status | Notes |
+|-----------|--------|-------|
+| Next.js (App + Pages Router) | ✅ Supported | Full dynamic route normalization |
+| React Router (Vite) | ✅ Supported | Client-side routing extraction |
+| Express | ✅ Supported | Verb and route matcher extraction |
+| Supabase Edge Functions | ✅ Supported | Edge-native handler scanning |
+| FastAPI (Python) | ✅ Supported | Normalizes typed parameters & catch-alls |
+| Django REST Framework | ✅ Supported | URL paths, `re_path` regexes, and ViewSet routers |
+| Flask (Python) | ✅ Supported | Supports methods lists & verb shortcuts |
+| Laravel (PHP) | ✅ Supported | Direct web/api PHP routes and optional arguments |
+| Ruby on Rails | ✅ Supported | Direct endpoints & resources macros |
+| Fastify (Node) | ✅ Supported | Verbs and explicit `.route` object configuration blocks |
+| Hono (Edge/TS) | ✅ Supported | Removes inline parameter constraint filters |
+| NestJS (Enterprise) | ✅ Supported | Class prefix + method decorators matching |
+| tRPC (TS-Native) | ✅ Supported | Recursive nested router traversal |
+| OpenAPI/Swagger | ✅ Supported | **Recursive spec finder** covering other architectures |
 
 ---
 
@@ -258,16 +326,23 @@ AIP is not a replacement for OpenAPI. It is a companion standard — optimised f
 
 ---
 
+## The Sovereign Agentic Economy (Why we are building this)
+
+Jin is designed to replace hostile, brute-force web scraping platforms with a cooperative, high-speed economic standard.
+
+1. **Webmaster Sovereignty:** For years, websites have been forced to fight AI scrapers draining their servers. Jin gives webmasters their power back. With `jin shield`, you dictate exactly what AI agents can see and do. If it isn't in your `jin.json`, it doesn't exist to the bot.
+2. **Agentic Determinism:** LLMs naturally prefer the path of least compute. By providing a clean `jin.json` map, AI swarms bypass heavy, hallucination-prone DOM scraping and execute deterministic API calls in milliseconds.
+3. **Layer 4 Settlement (Upcoming):** Jin is laying the groundwork for decentralized API monetization. Soon, webmasters will be able to gate premium endpoints in their `jin.json`, allowing verified agents to natively pay micro-transactions for data access. No middlemen, no expensive scraping platform subscriptions—just direct machine-to-machine commerce.
+
 ## Roadmap
 
 ```
-v0.1 (now)        Core spec, CLI, registry, explore page
-v0.2 (Month 2)    @papercargo/jin-shield — scraper protection
-                  Streaming intents, multi-step flows
-                  FastAPI, Django, Rails scanners
-v0.3 (Month 3)    Key Protocol — cryptographic agent sessions
-                  Replay-proof session keys
-                  Tamper-evident issuance log
+v0.1              Core spec, CLI, registry, explore page
+v0.2              Next-Gen backend framework support (10+ scanners)
+                  Recursive workspace OpenAPI spec discoverer
+v0.2.2 (now)      @papercargo/jin-shield — scraper protection (asymmetric RS256 JWT, zero-hop)
+v0.3 (Month 3)    Streaming intents, multi-step flows
+                  Key Protocol — cryptographic agent sessions
 v1.0 (2027)       Stable spec — no breaking changes
                   AIP working group formally established
                   Standards body submission

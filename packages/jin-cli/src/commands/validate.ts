@@ -109,7 +109,7 @@ export function validateAndPrint(cwd: string = process.cwd()) {
 
   if (result.valid) {
     console.log('\nReady to publish. Deploy your app first, then:')
-    console.log('  npx @meetjin/cli publish')
+    console.log('  npx @papercargo/jin-cli publish')
   } else {
     console.log(`\n  Fix ${result.errors.length} error(s) before publishing.`)
     process.exit(1)

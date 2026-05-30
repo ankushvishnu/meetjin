@@ -25,7 +25,7 @@ async function waitForDeployment(url) {
         await new Promise(r => setTimeout(r, 5000));
     }
     console.log('\n  ✗ Deployment taking longer than expected');
-    console.log('  Run: npx @meetjin/cli publish --skip-deploy');
+    console.log('  Run: npx @papercargo/jin-cli publish --skip-deploy');
     console.log('  once your app is live');
     process.exit(1);
 }

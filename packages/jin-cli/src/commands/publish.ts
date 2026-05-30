@@ -24,7 +24,7 @@ async function waitForDeployment(url: string) {
   }
   
   console.log('\n  ✗ Deployment taking longer than expected')
-  console.log('  Run: npx @meetjin/cli publish --skip-deploy')
+  console.log('  Run: npx @papercargo/jin-cli publish --skip-deploy')
   console.log('  once your app is live')
   process.exit(1)
 }

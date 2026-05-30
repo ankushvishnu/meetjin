@@ -126,7 +126,7 @@ export function PublishFlow() {
           <h2 className="text-2xl font-bold text-foreground mb-2">Register as a publisher</h2>
           <p className="text-muted text-sm mb-8">
             Create a publisher account to get an API key. This is also available
-            via <code className="px-1.5 py-0.5 rounded bg-white/[0.05] text-accent font-mono text-xs">npx @meetjin/cli publish</code>.
+            via <code className="px-1.5 py-0.5 rounded bg-white/[0.05] text-accent font-mono text-xs">npx @papercargo/jin-cli publish</code>.
           </p>
 
           <div className="space-y-5">

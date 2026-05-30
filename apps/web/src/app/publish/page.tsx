@@ -44,7 +44,7 @@ export default function PublishPage() {
             <div className="glass rounded-2xl p-8 border border-border inline-block text-left">
               <div className="text-sm text-muted mb-3">Install and publish in one command:</div>
               <div className="rounded-lg bg-background/60 border border-border px-5 py-3 font-mono text-sm text-accent">
-                $ npx @meetjin/cli publish
+                $ npx @papercargo/jin-cli publish
               </div>
             </div>
           </div>
