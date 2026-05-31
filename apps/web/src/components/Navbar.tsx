@@ -2,8 +2,23 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { supabasePublic } from "@/lib/supabase";
 
 export function Navbar() {
+  const [session, setSession] = useState<any>(null);
+
+  useEffect(() => {
+    supabasePublic.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+    const { data: { subscription } } = supabasePublic.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<"developers" | "webmasters" | null>(null);
   
@@ -247,6 +262,32 @@ export function Navbar() {
             </a>
             
             <div className="mx-2 h-4 w-px bg-border" />
+            {session ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="px-3 py-2 text-xs font-bold uppercase tracking-widest text-purple-400 hover:text-purple-300 transition-all font-bold"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={async () => {
+                    await supabasePublic.auth.signOut();
+                  }}
+                  className="px-3 py-2 text-xs font-medium uppercase tracking-widest text-muted hover:text-foreground transition-all cursor-pointer"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/dashboard"
+                className="px-3 py-2 text-xs font-medium uppercase tracking-widest text-muted hover:text-foreground transition-all"
+              >
+                Log In
+              </Link>
+            )}
+            <div className="mx-2 h-4 w-px bg-border" />
             <Link
               href="/publish"
               className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-1.5 text-xs font-bold uppercase tracking-widest text-black transition-all hover:bg-muted"
@@ -386,11 +427,39 @@ export function Navbar() {
           </div>
 
           {/* Primary CTA */}
-          <div className="pt-4 border-t border-white/[0.06]">
+          <div className="pt-4 border-t border-white/[0.06] space-y-3">
+            {session ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  onClick={() => setMobileOpen(false)}
+                  className="block w-full text-center rounded-full border border-purple-500/30 bg-purple-500/10 px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-purple-400 transition-all hover:bg-purple-500/20"
+                >
+                  Dashboard
+                </Link>
+                <button
+                  onClick={async () => {
+                    setMobileOpen(false);
+                    await supabasePublic.auth.signOut();
+                  }}
+                  className="block w-full text-center rounded-full border border-white/[0.08] bg-card px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-muted transition-all hover:bg-card-hover cursor-pointer"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileOpen(false)}
+                className="block w-full text-center rounded-full border border-white/[0.08] bg-card px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-muted transition-all hover:bg-card-hover"
+              >
+                Log In
+              </Link>
+            )}
             <Link
               href="/publish"
               onClick={() => setMobileOpen(false)}
-              className="block w-full text-center rounded-full bg-white px-5 py-3 text-xs font-bold uppercase tracking-widest text-black transition-all hover:bg-muted"
+              className="block w-full text-center rounded-full bg-white px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-black transition-all hover:bg-muted"
             >
               Publish your App
             </Link>
