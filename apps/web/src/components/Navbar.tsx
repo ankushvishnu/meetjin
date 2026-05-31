@@ -266,7 +266,7 @@ export function Navbar() {
               <>
                 <Link
                   href="/dashboard"
-                  className="px-3 py-2 text-xs font-bold uppercase tracking-widest text-purple-400 hover:text-purple-300 transition-all font-bold"
+                  className="px-3 py-2 text-xs font-bold uppercase tracking-widest text-foreground hover:text-white transition-all"
                 >
                   Dashboard
                 </Link>
@@ -433,7 +433,7 @@ export function Navbar() {
                 <Link
                   href="/dashboard"
                   onClick={() => setMobileOpen(false)}
-                  className="block w-full text-center rounded-full border border-purple-500/30 bg-purple-500/10 px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-purple-400 transition-all hover:bg-purple-500/20"
+                  className="block w-full text-center rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-foreground transition-all hover:bg-white/10"
                 >
                   Dashboard
                 </Link>
