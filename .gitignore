@@ -25,3 +25,8 @@ pnpm-debug.log*
 .idea/
 .DS_Store
 
+# Backup files
+*.bak
+
+# Turbo logs
+.turbo/
