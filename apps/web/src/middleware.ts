@@ -14,17 +14,11 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { verifyJinShield } from '@/lib/shield/jinShieldNext';
 
-// Import jin.json at build time for intent matching
-// The shield adapter matches request method + path against declared intents
-let jinJson: any = null;
-
-try {
-  // Dynamic import for edge runtime compatibility
-  jinJson = require('./public/.well-known/jin.json');
-} catch {
-  // jin.json not found — shield will operate in pass-through mode
-  // Run `npx @papercargo/jin-cli init` to generate the intent map
-}
+// jin.json intent map for route-level intent matching.
+// Currently null because meetjin.com's jin.json declares the Supabase edge
+// function, not the Next.js registry API routes. The shield will still
+// validate Jin-Identity tokens when present.
+const jinJson: any = null;
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
