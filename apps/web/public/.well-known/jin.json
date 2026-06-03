@@ -1,0 +1,35 @@
+{
+  "aip_version": "0.1",
+  "app": {
+    "name": "meetjin",
+    "description": "The Agent Intent Protocol registry — discover, publish, and verify agent-ready APIs across the agentic web.",
+    "url": "https://meetjin.com",
+    "contact": "hello@papercargo.com"
+  },
+  "auth": {
+    "type": "none"
+  },
+  "intents": [
+    {
+      "id": "post_supabase_refresh_intent_maps",
+      "name": "refresh-intent-maps Edge Function (POST)",
+      "description": "Supabase Edge Function that re-fetches and re-indexes all registered app intent maps from their published URLs.",
+      "triggers": [
+        "run supabase function refresh-intent-maps",
+        "call edge function refresh-intent-maps",
+        "execute refresh-intent-maps"
+      ],
+      "category": "developer",
+      "method": "POST",
+      "endpoint": "https://hpetolnjpuzdowvsbqza.supabase.co/functions/v1/refresh-intent-maps",
+      "parameters": {},
+      "requires_auth": true,
+      "destructive": false,
+      "confirmation_required": false
+    }
+  ],
+  "published": "2026-06-03T12:52:52.823Z",
+  "registry": {
+    "verified": false
+  }
+}
